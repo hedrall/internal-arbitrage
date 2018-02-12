@@ -1,0 +1,6 @@
+.idea/
+.metadata
+node_modules/
+.settings
+.project
+dist

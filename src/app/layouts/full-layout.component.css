@@ -1,0 +1,150 @@
+.wide-pill {
+	width  : auto    !important;
+	padding: 0 8px   !important;
+	margin : 0 5px   !important;
+	color  : #c0cadd !important;
+}
+
+.dropdown-item:hover{
+	background: #dddddd;
+}
+
+.sk-double-bounce{
+	margin: 0;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 5px;
+}
+
+.loading{
+	position: relative;
+}
+
+.sidebar .nav .nav-item.nav-dropdown.open {
+  background: #566164;
+}
+
+.navbar-logo-potaufeu {
+  width: 250px;
+  background: #1a2942;
+  text-align: center;
+  line-height: 60px;
+  padding: 0;
+}
+
+.navbar-logo-potaufeu img {
+  vertical-align: sub !important;
+}
+
+.navbar-logo-potaufeu a {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+.app-footer {
+  height: 30px;
+  min-height: 30px;
+  line-height: 30px;
+  flex: 0 0 0;
+}
+
+.breadcrumb {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.app-header.navbar:not(.header-hidden) {
+  animation-name: header-open;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+.app-header.navbar.header-hidden {
+  animation-name: header-hidden;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes header-open {
+  0% {
+    margin-top: -60px;
+  }
+  100% {
+    margin-top: 0;
+  }
+}
+
+@keyframes header-hidden {
+  0% {
+    margin-top: 0;
+  }
+  100% {
+    margin-top: -60px;
+  }
+}
+
+i.toggle-header {
+  float: right;
+  padding: 0 2px;
+  cursor: pointer;
+  line-height: 20px;
+}
+
+.right-navi-toggle-button {
+  float: left;
+  padding-right: 10px;
+  color: #5b686b;
+  line-height: 20px;
+}
+
+.clear-localstorage-button {
+  color: #c0cadd;
+  margin-right: 8px;
+}
+
+header.environment-production, .breadcrumb.environment-production {
+  background: rgba(255, 189, 57, 0.6);
+}
+
+header.environment-development, .breadcrumb.environment-development {
+  background: rgba(82, 144, 255, 0.47);
+}
+
+header.environment-local, .breadcrumb.environment-local {
+  background: rgba(79, 231, 90, 0.4);
+}
+
+header ul li a, header button {
+  color:        rgb(26, 41, 66) !important;
+  border-color: rgb(26, 41, 66);
+  background: transparent;
+}
+
+h1.environment-message {
+  float:       left;
+  margin:      0 0 0 13px;
+  height:      60px;
+  line-height: 60px;
+}
+
+.fa-cog {
+  margin-right: 15px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.fa-cog:hover {
+  background: #4030304f;
+}

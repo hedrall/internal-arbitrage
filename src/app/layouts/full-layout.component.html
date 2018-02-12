@@ -1,0 +1,45 @@
+<header class="app-header navbar"
+        [ngClass]="{ 'header-hidden': !layoutStatusService.show_header }">
+  <button class="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button">&#9776;</button>
+  <div class="navbar-logo-potaufeu">
+    <a>&nbsp;HEDRALL</a>
+  </div>
+</header>
+
+<div class="app-body" [ngClass]="{ 'header-hidden': !layoutStatusService.show_header }">
+  <!-- Main content -->
+  <main class="main">
+
+    <mat-progress-bar
+      *ngIf="layoutStatusService.show_progress_bar"
+      class="example-margin"
+      [color]="'primary'"
+      [mode]="'indeterminate'"
+    >
+    </mat-progress-bar>
+    <!-- Breadcrumb -->
+    <div class="breadcrumb mb-0">
+      <!-- 左ナビ格納ボタン -->
+      <i class="right-navi-toggle-button {{ sidebarToggleDirective?.is_slider === 'true' ? 'icon-arrow-left' : 'icon-arrow-right' }}"
+         appSidebarToggler
+      ></i>
+
+      <app-breadcrumbs></app-breadcrumbs>
+
+      <!-- ヘッダー格納ボタン -->
+      <i class="toggle-header {{ layoutStatusService.show_header ? 'icon-arrow-up' : 'icon-arrow-down' }}"
+         (click)="toggleHeader( $event );"
+         data-toggle="modal" data-target="#search_condition_hitory_modal"
+      ></i>
+    </div>
+
+    <div class="container-fluid body-container">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- /.conainer-fluid -->
+  </main>
+</div>
+
+<footer class="app-footer">
+  <a href="https://genesisui.com">hedrall</a> &copy; .
+</footer>

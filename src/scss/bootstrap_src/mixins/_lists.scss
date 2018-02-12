@@ -1,0 +1,7 @@
+// Lists
+
+// Unstyled keeps organization_list items block level, just removes default browser padding and organization_list-style
+@mixin list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}

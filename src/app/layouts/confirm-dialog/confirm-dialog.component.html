@@ -1,0 +1,14 @@
+<h2>アプリケーション設定を初期化しますか？</h2>
+<p>端末上の検索履歴やスタックアイテムなどの情報が削除されます。記事や編成内容など（DB）には影響ありません。</p>
+<div class="row button-2-container">
+  <div class="col-6">
+    <button mat-dialog-close class="btn btn-default">
+      閉じる
+    </button>
+  </div>
+  <div class="col-6">
+    <button mat-dialog-close (click)="clear();" class="btn btn-danger">
+      初期化
+    </button>
+  </div>
+</div>

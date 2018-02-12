@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("assets/ng2-dnd/style.css");
+@import '../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '../node_modules/dragula/dist/dragula.min.css';
+
+.app-body:not(.header-hidden) {
+  animation-name: app-body-open;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+.app-body.header-hidden {
+  animation-name: app-body-hidden;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes app-body-open {
+  0% {
+    margin-top: 0;
+  }
+  100% {
+    margin-top: 60px;
+  }
+}
+
+@keyframes app-body-hidden {
+  0% {
+    margin-top: 60px;
+  }
+  100% {
+    margin-top: 0;
+  }
+}
+
+header.header-hidden + div.app-body {
+  margin-top: 0;
+}

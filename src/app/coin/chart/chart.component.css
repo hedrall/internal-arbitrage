@@ -1,0 +1,19 @@
+table.depth tr td {
+  padding: 0 0 0 5px;
+}
+
+table.depth tr.asks td {
+  color: #46ca50;
+}
+
+table.depth tr.bids td {
+  color: #f1483b;
+}
+
+.plus {
+  color: #46ca50;
+}
+
+.minus {
+  color: #f1483b;
+}

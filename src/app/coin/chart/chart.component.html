@@ -1,0 +1,246 @@
+<div class="animated fadeIn">
+  <!--<div class="card-columns cols-2">-->
+  <div class="">
+    <div class="card">
+      <div class="card-header">
+        <h2>Zaif内部アービトラージ</h2>
+        <h5 style="float: right">最終更新時刻: {{ internal_arbitrage_last_update }}</h5>
+        <mat-form-field>
+          <mat-select placeholder="通貨を選択してください"
+                      (change)="selectCurrencyPairOfDepth( $event )">
+            <mat-option *ngFor="let currency_pair of currency_pairs.zaif.all_pairs" [value]="currency_pair">
+              {{ currency_pair.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="限度額({{ config.amount }})"
+                      (change)="selectTradeAmount( $event )">
+            <mat-option *ngFor="let amount of config.amount_list" [value]="amount">
+              {{ amount }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="card-block">
+        <div>
+          <button class="btn btn-danger" (click)="stop()" style="float: right">停止</button>
+          <h3>板情報 (BTC: {{ btc_jpy.zaif.last_price }}JPY,
+              {{ btc_jpy.zaif.interval }}秒平均: {{ btc_jpy.zaif.last_price_on_average | number: '7.0-0' }})</h3>
+          <div class="row">
+            <div class="col-6">
+              <h5>{{ this.currency_pairs.zaif.selected_pair.name.toUpperCase() }}
+                 ({{ currency_pairs.zaif.selected_pair.last_price  | number: '3.0-4' }} )
+              </h5>
+              <table class="table depth">
+                <tr>
+                  <th>price</th>
+                  <th>amount</th>
+                </tr>
+                <tr class="asks" *ngFor="let ask of currency_pairs.zaif.selected_pair.disp_depth_sorted.asks">
+                  <td>{{ ask[0] }}</td>
+                  <td>{{ ask[1] }}</td>
+                </tr>
+                <tr class="bids" *ngFor="let bid of currency_pairs.zaif.selected_pair.disp_depth_sorted.bids">
+                  <td>{{ bid[0] }}</td>
+                  <td>{{ bid[1] }}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-6">
+              <h5>{{ this.currency_pairs.zaif.selected_pair.with_btc_name.toUpperCase() }}
+                ( {{ currency_pairs.zaif.selected_pair.last_price_with_btc * this.btc_jpy.zaif.last_price_on_average | number: '3.0-4' }} )
+              </h5>
+              <table class="table depth">
+                <tr>
+                  <th>price</th>
+                  <th>amount</th>
+                </tr>
+                <tr class="asks" *ngFor="let ask of btc_jpy.zaif.disp_depth_sorted.asks">
+                  <td>{{ ask[0] }}( {{ask[2]}}JPY )</td>
+                  <td>{{ ask[1] }}</td>
+                </tr>
+                <tr class="bids" *ngFor="let bid of btc_jpy.zaif.disp_depth_sorted.bids">
+                  <td>{{ bid[0] }}( {{bid[2]}}JPY )</td>
+                  <td>{{ bid[1] }}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-3">
+              <h5>JPY買い方</h5>
+              <table class="table depth">
+                <tr>
+                  <th>price</th>
+                  <th>amount</th>
+                </tr>
+                <tr class="asks" *ngFor="let price of trade.average_asks_on_jpy.price_history; let index = index;">
+                  <td>{{ price }}</td>
+                  <td>{{ trade.average_asks_on_jpy.amount_history[index] }}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-3">
+              <h5>JPY売りかた</h5>
+              <table class="table depth">
+                <tr>
+                  <th>price</th>
+                  <th>amount</th>
+                </tr>
+                <tr class="asks" *ngFor="let price of trade.average_bids_on_jpy.price_history; let index = index;">
+                  <td>{{ price }}</td>
+                  <td>{{ trade.average_bids_on_jpy.amount_history[index] }}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-3">
+              <h5>BTC買い方</h5>
+              <table class="table depth">
+                <tr>
+                  <th>price</th>
+                  <th>amount</th>
+                </tr>
+                <tr class="asks" *ngFor="let price of trade.average_asks_on_btc.price_history; let index = index;">
+                  <td>{{ price }}</td>
+                  <td>{{ trade.average_asks_on_btc.amount_history[index] }}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-3">
+              <h5>BTC売り方</h5>
+              <table class="table depth">
+                <tr>
+                  <th>price</th>
+                  <th>amount</th>
+                </tr>
+                <tr class="asks" *ngFor="let price of trade.average_bids_on_btc.price_history; let index = index;">
+                  <td>{{ price }}</td>
+                  <td>{{ trade.average_bids_on_btc.amount_history[index] }}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="col-6">
+              <button class="btn btn-success float-right"
+                      [disabled]="internal_arbitrage_on_depth.jpy_to_btc_on_percentage <= 0"
+                      (click)="executeArbitrage( 'jpy_to_btc' )"
+              >
+                実行
+              </button>
+              <h5>JPY買い、BTC売り実行</h5>
+            </div>
+            <div class="col-6">
+              <button class="btn btn-success float-right"
+                      [disabled]="internal_arbitrage_on_depth.btc_to_jpy_on_percentage <= 0"
+                      (click)="executeArbitrage( 'btc_to_jpy' )"
+              >
+                実行
+              </button>
+              <h5>BTC買い、JPY売り実行</h5>
+            </div>
+            <div class="col-12">
+              <table style="width: 100%;">
+                <tr>
+                  <th>JPY板買い</th>
+                  <th>BTC板買い</th>
+                  <th>JPY板売り</th>
+                  <th>BTC板売り</th>
+                </tr>
+                <tr>
+                  <td>{{ trade.average_asks_on_jpy.price | number : '5.0-1' }}<br>
+                      (端数:{{ trade.average_asks_on_jpy.balance | number : '5.0-1' }})
+                  </td>
+                  <td>{{ trade.average_asks_on_btc.price | number : '1.0-6' }}({{ trade.average_asks_on_btc.price * btc_jpy.zaif.last_price | number : '5.0-1' }})<br>
+                      (端数:{{ trade.average_asks_on_btc.balance * btc_jpy.zaif.last_price | number : '5.0-1' }}/JPY)
+                  </td>
+                  <td>{{ trade.average_bids_on_jpy.price | number : '5.0-1' }}<br>
+                      (端数:{{ trade.average_bids_on_jpy.balance * currency_pairs.zaif.selected_pair.last_price | number : '5.0-1' }}/JPY)
+                  </td>
+                  <td>{{ trade.average_bids_on_btc.price | number : '1.0-6' }}({{ trade.average_bids_on_btc.price * btc_jpy.zaif.last_price | number : '5.0-1' }})<br>
+                      (端数:{{ trade.average_bids_on_btc.balance * btc_jpy.zaif.last_price | number : '5.0-1' }}/JPY)
+                  </td>
+                </tr>
+                <tr>
+                  <td>JPY買い、BTC売り</td>
+                  <td>
+                    {{ internal_arbitrage_on_depth.jpy_to_btc | number : '4.0-4' }}<br>
+                    <a [ngClass]="{ 'plus': internal_arbitrage_on_depth.jpy_to_btc_on_percentage >= 0,
+                     'minus': internal_arbitrage_on_depth.jpy_to_btc_on_percentage < 0 }">
+                      利益率{{ internal_arbitrage_on_depth.jpy_to_btc_on_percentage | number : '1.0-3' }}%
+                    </a>
+                  </td>
+                  <td>BTC買い、JPY売り</td>
+                  <td>{{ internal_arbitrage_on_depth.btc_to_jpy | number : '4.0-4' }}<br>
+                    <a [ngClass]="{ 'plus': internal_arbitrage_on_depth.btc_to_jpy_on_percentage >= 0,
+                     'minus': internal_arbitrage_on_depth.btc_to_jpy_on_percentage < 0 }">
+                      利益率{{ internal_arbitrage_on_depth.btc_to_jpy_on_percentage | number : '1.0-3' }}%
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div *ngFor="let message of interval_arbitrage_execute_message">
+              currency_pair: {{ message.currency_pair }}
+              action: {{ message.action }}
+              price: {{ message.price }},
+              amount: {{ message.amount }}
+              btc_price: {{ message.btc_price }}
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <mat-form-field>
+        <mat-select placeholder="通貨を選択してください" [(value)]="manual_trade.zaif.selected_pair">
+          <mat-option *ngFor="let currency_pair of currency_pairs.zaif.all_pairs" [value]="currency_pair.currency_pair">
+            {{ currency_pair.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="金額(JPY)" [(ngModel)]="manual_trade.zaif.price" [required]="true" [type]="'number'">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="数量(coin)" [(ngModel)]="manual_trade.zaif.amount" [required]="true" [type]="'number'">
+      </mat-form-field>
+      <button class="btn btn-success" (click)="manualTradeCurrencyOnJpy( 'bid' )">
+        買う
+      </button>
+      <button class="btn btn-success" (click)="manualTradeCurrencyOnJpy( 'ask' )">
+        売る
+      </button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <button class="btn btn-success" (click)="getInfo()">
+          情報
+        </button>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <h5>残高</h5>
+          <table>
+            <tr *ngFor="let key of get_keys(info.get_info.return.funds)">
+              <td>{{ key }}</td>
+              <td>{{ info.get_info.return.funds[key] }}</td>
+            </tr>
+          </table>
+          <p>{{ info.get_info_last_update }}</p>
+        </div>
+        <div class="col-3">
+          <h5>残高(注文中込み)</h5>
+          <table>
+            <tr *ngFor="let key of get_keys(info.get_info.return.deposit)">
+              <td>{{ key }}</td>
+              <td>{{ info.get_info.return.deposit[key] }}</td>
+            </tr>
+          </table>
+          <p>{{ info.get_info_last_update }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
