@@ -1,7 +1,7 @@
 <?php
     /**
-     * アクセストークンコントローラ
-     * @author motoki.okamoto
+     * ZaifへのリクエストをプリキシするAPI
+     * @author masaharuKomuro
      */
     class Controller_Api_Zaif extends Controller
     {
