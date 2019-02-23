@@ -1,15 +1,15 @@
 {
-  "name": "genesisui-angular",
-  "version": "1.8.4",
-  "description": "Bootstrap 4 Admin Template",
+  "name": "internal-arbitrage",
+  "version": "0",
+  "description": "internal arbitrage",
   "author": "",
   "url": "https://genesisui.com",
-  "copyright": "Copyright 2017 creativeLabs Łukasz Holeczek",
+  "copyright": "Copyright 2019 hedral",
   "license": "MIT",
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host potaufeu-l.asahi.com --proxy-config proxy.conf.json -e local",
+    "start": "ng serve --port 4300",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
