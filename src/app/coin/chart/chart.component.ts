@@ -1,6 +1,5 @@
 import { Component, EventEmitter } from '@angular/core';
 import { HttpService } from '../../common/service/http.service';
-import { RegistryService } from '../../common/service/registry.service';
 import { MatSelectChange } from '@angular/material';
 import moment = require('moment');
 import { HttpErrorResponse } from '@angular/common/http';
@@ -21,7 +20,7 @@ export class ChartComponent {
       all_pairs: [],
       selected_pair: { // 選択している通過の情報
         all:                 null,
-        name:                '',              // 選択下通過ペアの名前 ex) nem_jpy
+        name:                '',              // 選択した通過ペアの名前 ex) nem_jpy
         depth:               new ZaifDepth(), // 板情報
         disp_depth:          new ZaifDepth(), // 画面に表示する板情報 (ask, bid共に5件ずつ )
         disp_depth_sorted:   new ZaifDepth(), // 画面に表示する板情報 (askを反転ソート済み )
@@ -39,7 +38,7 @@ export class ChartComponent {
   };
   
   public config = {
-    amount: 100, // 一回の取引で使用する額
+    amount: 100, // 一回の取引で使用する額 (JPY)
     amount_list: [100, 1000, 10000, 50000, 100000, 20000]
   };
   
@@ -69,7 +68,7 @@ export class ChartComponent {
     },
   };
   
-  // 購入情報
+  // 取引情報
   public trade = {
     average_asks_on_jpy: { // JPY売り
       price: 0,
@@ -100,7 +99,7 @@ export class ChartComponent {
   // 板情報で行う内部アービトラージの情報
   public internal_arbitrage_on_depth = {
     jpy_to_btc: 0,               // JPY買い、BTC売りの総額
-    jpy_to_btc_on_unit: 0,       // JPY買い、BTC売りの短歌
+    jpy_to_btc_on_unit: 0,       // JPY買い、BTC売りの単価
     jpy_to_btc_on_percentage: 0, // JPY買い、BTC売りの利益率
     jpy_to_btc_total_price: 0,   // JPY買い、BTC売りの総額(JPY)
     jpy_to_btc_total_amount: 0,  // JPY買い、BTC売りの取引総数(coin)
