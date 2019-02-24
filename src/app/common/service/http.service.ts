@@ -43,12 +43,9 @@ export class HttpService {
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
     // 通信設定オブジェクト作成
-    if (param_in_path !== '') {
-      param_in_path = '/' + param_in_path;
-    }
     const options: RequestOptionsArgs = {
       method: method,
-      url: this.registryService.api[exchange]['base'] + '/' + this.registryService.api[exchange][api_type] + param_in_path,
+      url: this.registryService.api[exchange]['base'] + '/' + this.registryService.api[exchange][api_type] + ',' + param_in_path,
       headers: headers
     };
 

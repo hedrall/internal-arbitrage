@@ -17,4 +17,8 @@ export class ZaifCurrencyPair {
   aux_japanese:   string;  // "\u65e5\u672c\u5186",
   item_japanese:  string;  // "\u30d3\u30c3\u30c8\u30b3\u30a4\u30f3",
   aux_unit_point: number;  // 0,
+
+  constructor ( _: Partial<ZaifCurrencyPair> ) {
+    Object.assign( this, _ );
+  }
 }

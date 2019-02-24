@@ -1,6 +1,10 @@
 export class ZaifDepth {
-  asks: Array<Array<number>>;
-  bids: Array<Array<number>>;
+  asks: number[][];
+  bids: number[][];
+
+  constructor ( _: Partial<ZaifDepth> ) {
+    Object.assign( this, _ );
+  }
 }
 
 export class ZaifDepthAsk {

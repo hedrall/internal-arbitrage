@@ -71,12 +71,12 @@
               <h5>JPY買い方</h5>
               <table class="table depth">
                 <tr>
-                  <th>price</th>
+                  <th>price(JPY)</th>
                   <th>amount</th>
                 </tr>
-                <tr class="asks" *ngFor="let price of trade.average_asks_on_jpy.price_history; let index = index;">
-                  <td>{{ price }}</td>
-                  <td>{{ trade.average_asks_on_jpy.amount_history[index] }}</td>
+                <tr class="asks" *ngFor="let history of trade.average_asks_on_jpy.history; let index = index;">
+                  <td>{{ history.price }}</td>
+                  <td>{{ history.amount }}</td>
                 </tr>
               </table>
             </div>
@@ -84,12 +84,12 @@
               <h5>JPY売りかた</h5>
               <table class="table depth">
                 <tr>
-                  <th>price</th>
+                  <th>price(JPY)</th>
                   <th>amount</th>
                 </tr>
-                <tr class="asks" *ngFor="let price of trade.average_bids_on_jpy.price_history; let index = index;">
-                  <td>{{ price }}</td>
-                  <td>{{ trade.average_bids_on_jpy.amount_history[index] }}</td>
+                <tr class="asks" *ngFor="let history of trade.average_bids_on_jpy.history; let index = index;">
+                  <td>{{ history.price }}</td>
+                  <td>{{ history.amount }}</td>
                 </tr>
               </table>
             </div>
@@ -97,12 +97,12 @@
               <h5>BTC買い方</h5>
               <table class="table depth">
                 <tr>
-                  <th>price</th>
+                  <th>price(BTC)</th>
                   <th>amount</th>
                 </tr>
-                <tr class="asks" *ngFor="let price of trade.average_asks_on_btc.price_history; let index = index;">
-                  <td>{{ price }}</td>
-                  <td>{{ trade.average_asks_on_btc.amount_history[index] }}</td>
+                <tr class="asks" *ngFor="let history of trade.average_asks_on_btc.history; let index = index;">
+                  <td>{{ history.price }}</td>
+                  <td>{{ history.amount }}</td>
                 </tr>
               </table>
             </div>
@@ -110,12 +110,12 @@
               <h5>BTC売り方</h5>
               <table class="table depth">
                 <tr>
-                  <th>price</th>
+                  <th>price(BTC)</th>
                   <th>amount</th>
                 </tr>
-                <tr class="asks" *ngFor="let price of trade.average_bids_on_btc.price_history; let index = index;">
-                  <td>{{ price }}</td>
-                  <td>{{ trade.average_bids_on_btc.amount_history[index] }}</td>
+                <tr class="asks" *ngFor="let history of trade.average_bids_on_btc.history; let index = index;">
+                  <td>{{ history.price }}</td>
+                  <td>{{ history.amount }}</td>
                 </tr>
               </table>
             </div>

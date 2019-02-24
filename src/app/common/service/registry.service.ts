@@ -8,7 +8,7 @@ export class RegistryService {
   
   public api: object = {
     zaif: {
-      base: 'https://api.zaif.jp/api/1',
+      base: 'http://localhost:4400/zaif',
       currency_pairs:    'currency_pairs',
       depth:             'depth',
       last_price:        'last_price',
